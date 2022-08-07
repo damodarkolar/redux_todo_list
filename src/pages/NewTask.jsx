@@ -19,7 +19,7 @@ const initialNewTaskData={
     tags:{
         official:false,
         personal:false,
-        others:false,
+        others:true,
     },
     status:"todo",
 }
@@ -27,9 +27,9 @@ const initialNewTaskData={
 const NewTask=()=>{
 
 const [newTaskData, setNewTaskData]=useState(initialNewTaskData)
-const {title, description, subTodoData, status, tags}=newTaskData;
-
-const {official, personal, others}=tags
+const {title, description, subTodoData, status}=newTaskData;
+const [tagsList, setTagsList]=useState(initialNewTaskData.tags)
+const {official, personal, others}=tagsList
 const {todo, inProgress, completed} =status
 
 const [listSubTodo, setListSubTodo]=useState([])
@@ -39,6 +39,10 @@ const{token }=useSelector(state=>state.auth);
 const dispatch =useDispatch();
 const navigate=useNavigate();
 
+const handleTagsList=(e)=>{
+const {name, checked}=e.target
+setTagsList(prev=>({...prev,[name]:checked}))
+}
 
 const handleOnchangeSubTodo=(e)=>{
     const {name, value}  =e.target;
@@ -63,12 +67,12 @@ else{
 
 
 const handleCreateNewTask=()=>{
-    console.log("listSubTodo")
-    console.log(listSubTodo)
-setNewTaskData(prev => ({...newTaskData,subTodoData:listSubTodo}))
+
+setNewTaskData(prev => ({...prev,subTodoData:listSubTodo}))
+
 fetch(`http://localhost:8080/todoList`,{
     method:"POST",
-    body:JSON.stringify(newTaskData),
+    body:JSON.stringify({...newTaskData,subTodoData:listSubTodo, tags:tagsList}),
     headers:{
         "COntent-Type" : "application/json"
     }
@@ -118,13 +122,13 @@ setListSubTodo([])
                         <label htmlFor="">Tag</label>
                         <br />
                         <label htmlFor="">Official</label>
-                        <input type="checkbox" name="personal" value={personal} onChange={handleNewTaskOnchange}/>
+                        <input type="checkbox" name="official" value={official} onChange={handleTagsList}/>
                         <br />
                         <label htmlFor="">Personal</label>
-                        <input type="checkbox" name="personal" value={personal} onChange={handleNewTaskOnchange}/>
+                        <input type="checkbox" name="personal" value={personal} onChange={handleTagsList}/>
                         <br />
                         <label htmlFor="">others</label>
-                        <input type="checkbox" name="others" value={others} onChange={handleNewTaskOnchange}/>
+                        <input type="checkbox" name="others" value={others} onChange={handleTagsList}/>
                         </div>                        
                     </div>
                     <div style={{width:"45%", display:"flex", flexDirection:"column", padding:"20px"}}>
@@ -134,7 +138,7 @@ setListSubTodo([])
                             <button onClick={handleSubTodoAdd}>Add</button>
                         </div>
                         <div>
-                            {listSubTodo?.map(ele=> <div key={ele.id}><input type="checkbox"/> <h2>{ele.subTaskTitle}</h2><button>Delete</button></div>)}
+                            {listSubTodo?.map(ele=> <div key={ele.id}><input type="checkbox"/> <h2 key={ele.id}>{ele.subTaskTitle}</h2><button>Delete</button></div>)}
                         </div>                                           
                     </div>
                     <div>

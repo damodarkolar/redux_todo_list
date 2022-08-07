@@ -1,39 +1,67 @@
 {
   "todoList": [
     {
-      "title": "hai",
-      "description": "hai",
-      "subTodoData": ["1","2","3"],
+      "title": "aaa",
+      "description": "aaa",
+      "subTodoData": [
+        {
+          "subTaskTitle": "aaa",
+          "status": false,
+          "subtaskId": "51fdbbb9-7cca-48f3-b8e8-02a02e916313"
+        },
+        {
+          "subTaskTitle": "aa",
+          "status": false,
+          "subtaskId": "51fdbbb9-7cca-48f3-b8e8-02a02e916313"
+        },
+        {
+          "subTaskTitle": "567",
+          "status": false,
+          "subtaskId": "51fdbbb9-7cca-48f3-b8e8-02a02e916313"
+        }
+      ],
       "tags": {
         "official": false,
         "personal": false,
-        "others": true
+        "others": false
       },
-      "status": "todo",
+      "status": "inProgress",
       "id": 1
     },
     {
-      "title": "hello",
-      "description": "hello",
-      "subTodoData": ["1","2","3"],
+      "title": "teaching",
+      "description": "in collge",
+      "subTodoData": [
+        {
+          "subTaskTitle": "1st sem",
+          "status": false,
+          "subtaskId": "ed2a7c00-9288-4487-850a-27652b82bbd9"
+        }
+      ],
       "tags": {
         "official": false,
         "personal": false,
-        "others": true
+        "others": false
       },
-      "status": "inProgress",
+      "status": "todo",
       "id": 2
     },
     {
-      "title": "hella",
-      "description": "hella",
-      "subTodoData": ["1","2","3"],
+      "title": "exam",
+      "description": "working",
+      "subTodoData": [
+        {
+          "subTaskTitle": "duty",
+          "status": false,
+          "subtaskId": "62eaab69-c49f-424c-bddc-19700cc27405"
+        }
+      ],
       "tags": {
         "official": false,
-        "personal": false,
-        "others": true
+        "personal": true,
+        "others": false
       },
-      "status": "completed",
+      "status": "todo",
       "id": 3
     }
   ]

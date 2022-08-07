@@ -16,21 +16,21 @@ const dispatch=useDispatch();
       .catch(err=>dispatch(handleTodosErr()))
 
     }, [])
-    console.log()
+
     return(
         <>
         <div style={{display:"flex", justifyContent:"space-around"}}>
-            <div>
+            <div >
                 <h1>TODO</h1>
-                {todosData?.map(ele=> ele.status=="todo"?<HomeCards data={ele}/>: null)}
+                {todosData?.map(ele=> ele.status=="todo"?<HomeCards data={ele} key={ele.id}/>: null)}
             </div>
             <div>
             <h1>IN PROGRESS</h1>
-            {todosData?.map(ele=> ele.status=="inProgress"?<HomeCards data={ele}/>: null)}
+            {todosData?.map(ele=> ele.status=="inProgress"?<HomeCards  data={ele}key={ele.id}/>: null)}
             </div>
             <div>
             <h1>DONE</h1>
-            {todosData?.map(ele=> ele.status=="completed"?<HomeCards data={ele}/>: null)}
+            {todosData?.map(ele=> ele.status=="completed"?<HomeCards data={ele}key={ele.id}/>: null)}
             </div>
         </div>        
         </>

@@ -4,10 +4,10 @@ import { handleLoginErr, handleLoginSuccessful, handleLoginLoading, handleUserDe
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-
+import React from "react"
 const loginData={
-    password:"",
-    username:""
+    username:"",
+    password:""
 }
 const Login=()=>{
 const dispatch = useDispatch();
@@ -16,9 +16,14 @@ const {username, password}=loginDetails;
 const navigate =useNavigate();
 const {token}=useSelector(state=> state.auth)
 
-if(!!token){
+
+React.useEffect(()=>{
+    if(!!token){
     navigate("/")
 }
+},[token])
+
+
 const handleOnChange=(e)=>{
     const {name,value}=e.target;
 setLoginDetails(prev=> ({...loginDetails,[name]:value}))
@@ -29,26 +34,21 @@ const handleOnSubmit =(e)=>{
     e.preventDefault()
     
 dispatch(handleLoginLoading());
-fetch(`https://masai-api-mocker.herokuapp.com/auth/login`,{
+fetch(`https://reqres.in/api/login`,{
     method:"POST",
     body:JSON.stringify(loginDetails),
-  
+    headers:{
+        "Content-Type": "application/json"
+    }  
 })
 .then(res=>res.json())
-.then(data=>{dispatch(handleLoginSuccessful)
-    fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`,{
-    method :"GET",
-    headers:{
-        "Authorization": `Bearer ${data.token}`
-    },
-})
-.then(res=>res.json)
-.then(result=> dispatch(handleUserDetails(result)))
-.catch(err=>console.log(err))    
+.then(data=>{dispatch(handleLoginSuccessful(data.token))
+//     fetch(`https://reqres.in/api/users/2`)
+// .then(res=>res.json)
+// .then(result=> console.log(result))
+// .catch(err=>console.log(err)) 
 })
 .catch(err=>dispatch(handleLoginErr()))
-
-
 setLoginDetails(loginData)
 }
 

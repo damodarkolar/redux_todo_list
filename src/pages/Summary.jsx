@@ -5,28 +5,35 @@ import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react"
 const Summary=()=>{
     const {token}=useSelector(state=>state.auth);
-    const {todosData}=useSelector(state=>state.todos)
-    const navigate=useNavigate()
-    const [tc, setTc]=useState(0);
-    const [pc, setPc]=useState(0);
-    const [cc, setCc]=useState(0);
+    const [todoList, setTodoList]=useState([]);
+    const [inProgressList, setInProgressList]=useState([]);
+    const [doneList, setDoneList]=useState([]);
+    
 
-    // if(!token){
+    useEffect(()=>{
+         // if(!token){
     //     navigate("/login")
     // }
-useEffect(() => {
-console.log(todosData)
-    for(let i=0; i<todosData.length; i++){
-        if(todosData.status=="todo"){
-            setTc(tc+1)
-        }else if(todosData.status=="completed"){
-            setCc(cc+1)
-        }else{
-            setPc(pc+1)
-        }
-    }
-    
-}, [])
+    },[token])
+
+    useEffect(()=>{
+        fetch(`http://localhost:8080/todoList?status=todo`)
+        .then(res=>res.json())
+        .then(data=>setTodoList(data))
+        .catch(err=>console.log(err))
+    },[])
+    useEffect(()=>{
+        fetch(`http://localhost:8080/todoList?status=inProgress`)
+        .then(res=>res.json())
+        .then(data=>setInProgressList(data))
+        .catch(err=>console.log(err))
+    },[])
+    useEffect(()=>{
+        fetch(`http://localhost:8080/todoList?status=done`)
+        .then(res=>res.json())
+        .then(data=>setDoneList(data))
+        .catch(err=>console.log(err))
+    },[])
 
    
 
@@ -39,11 +46,12 @@ console.log(todosData)
             </div>
             <div>
                 <div><Navbar/></div>
-                <div> 
+                <div > 
                     <h1>Summary</h1>
-                    <h2>{tc}</h2>
-                    <h2>{pc}</h2>
-                    <h2>{cc}</h2>
+                    <div style={{border:"2px solid black", width:"300px", display:"flex", justifyContent:"space-around"}} ><h2>Todo</h2><h2> {todoList.length}</h2></div>
+                    <div style={{border:"2px solid black", width:"300px", display:"flex", justifyContent:"space-around"}}><h2> In Progress</h2><h2> {inProgressList.length}</h2></div>
+                    <div style={{border:"2px solid black", width:"300px", display:"flex", justifyContent:"space-around"}}><h2>Done</h2><h2> {doneList.length}</h2></div>                  
+                    
                 </div>
             </div>        
         </div>        

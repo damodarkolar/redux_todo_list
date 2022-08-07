@@ -21,7 +21,7 @@ export const authReducer =(store=initialState, action)=>{
                     ...store,
                     loginLoading:false,
                     loginErr:false,
-                    token: action.payload.data.token,
+                    token: action.payload,
                 }
                 case LOGIN_ERR:
                 return{
@@ -37,7 +37,7 @@ export const authReducer =(store=initialState, action)=>{
                     case USER_DETAILS:
                         return{
                             ...store,
-                            userDetails:action.payload.result
+                            userDetails:action.payload
                         }     
     
         default:

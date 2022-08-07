@@ -6,10 +6,11 @@ const SidebarTodoListArea=()=>{
 const {token}=useSelector(state=>state.auth);
 const {todosData}=useSelector(state=>state.todos)
 
+
     return !!token? (
         <>
-        <div>
-        SidebarTodoListArea 
+        <div style={{paddingTop:"50px"}}>
+        ALL{todosData.length}
         </div>        
         </>
     ) :(

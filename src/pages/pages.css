@@ -1,7 +1,7 @@
 #container{
     display: flex;
-    background-color: aquamarine;
-    border: 2px solid red;
+    /* background-color: aquamarine; */
+    /* border: 2px solid red; */
     height: 500px;
 }
 

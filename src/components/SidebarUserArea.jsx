@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import { handleLogout } from "../redux/authRedux/actions";
 const SidebarUserArea=()=>{
 const dispatch=useDispatch();
-const {token, userDetails} =useSelector(state=>state.auth);
-
-    
+const data =useSelector(state=>state.auth);
+const userDetails=data.userDetails
+const token=data.token
 
     return !!token? (
         <>
         <div>
-            {userDetails} 
-            <button onClick={()=>dispatch(handleLogout)}>Log Out</button>
+            {"userDetails"} 
+            <button onClick={()=>dispatch(handleLogout())}>Log Out</button>
         </div>        
         </>
     ):(
